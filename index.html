@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ZEHax Downloader - 100% Working YouTube MP3 Downloader">
-    <title>ZEHax - YouTube MP3 Downloader</title>
+    <title>KPH - MP3 Downloader</title>
     <style>
         * {
             margin: 0;
@@ -16,187 +15,159 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #333;
-            line-height: 1.6;
-        }
-
-        .app {
-            min-height: 100vh;
             padding: 20px;
         }
 
         .container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 0 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
         }
 
         .header {
-            text-align: center;
-            margin-bottom: 40px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
             color: white;
+            padding: 30px 20px;
+            text-align: center;
         }
 
         .header h1 {
-            font-size: 3rem;
-            font-weight: 700;
+            font-size: 2.5em;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .header p {
-            font-size: 1.2rem;
+            font-size: 1.1em;
             opacity: 0.9;
         }
 
-        .download-form {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
+        .search-section {
+            padding: 30px;
         }
 
-        .form-group {
+        .search-box {
+            display: flex;
+            gap: 10px;
             margin-bottom: 20px;
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #555;
-        }
-
-        .form-input {
-            width: 100%;
+        .search-input {
+            flex: 1;
             padding: 15px;
-            border: 2px solid #e1e5e9;
-            border-radius: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
             font-size: 16px;
-            transition: all 0.3s ease;
+            transition: border-color 0.3s;
         }
 
-        .form-input:focus {
+        .search-input:focus {
             outline: none;
             border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
-        .form-select {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e1e5e9;
-            border-radius: 10px;
-            font-size: 16px;
-            background: white;
+        .search-btn {
+            padding: 15px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
             cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .search-btn:hover {
+            background: #764ba2;
+        }
+
+        .result-section {
+            padding: 0 30px 30px;
+            display: none;
+        }
+
+        .song-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .song-info h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .song-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+        }
+
+        .download-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
         }
 
         .download-btn {
-            width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-        }
-
-        .download-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-        }
-
-        .download-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .result-card {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            display: none;
-        }
-
-        .result-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .result-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .result-info {
-            display: grid;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .info-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px;
-            background: #f8f9fa;
-            border-radius: 8px;
-        }
-
-        .download-link {
-            display: inline-block;
-            padding: 12px 24px;
-            background: #28a745;
+            background: #667eea;
             color: white;
             text-decoration: none;
             border-radius: 8px;
-            font-weight: 600;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
         }
 
-        .download-link:hover {
-            background: #218838;
+        .download-btn:hover {
+            background: #764ba2;
             transform: translateY(-2px);
         }
 
-        .error {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #f5c6cb;
-            display: none;
+        .download-btn.audio {
+            background: #4CAF50;
+        }
+
+        .download-btn.audio:hover {
+            background: #45a049;
+        }
+
+        .thumbnail {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 8px;
+            margin: 15px 0;
         }
 
         .loading {
+            text-align: center;
+            padding: 20px;
             display: none;
-            justify-content: center;
-            align-items: center;
-            padding: 40px;
-            flex-direction: column;
-            gap: 20px;
         }
 
         .spinner {
-            width: 40px;
-            height: 40px;
             border: 4px solid #f3f3f3;
             border-top: 4px solid #667eea;
             border-radius: 50%;
+            width: 40px;
+            height: 40px;
             animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
         }
 
         @keyframes spin {
@@ -204,369 +175,171 @@
             100% { transform: rotate(360deg); }
         }
 
-        .history-item {
-            background: white;
+        .error {
+            background: #ffebee;
+            color: #c62828;
             padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #c62828;
+            display: none;
         }
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            color: #666;
             margin-top: 30px;
         }
 
-        .feature-card {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-
-        .feature-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .feature-description {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2.5rem;
-            }
-            
-            .download-form {
-                padding: 25px;
-            }
-            
-            .container {
-                padding: 0 15px;
-            }
-            
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .history-item {
-                flex-direction: column;
-                gap: 10px;
-                text-align: center;
-            }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
         }
     </style>
 </head>
 <body>
-    <div class="app">
-        <div class="container">
-            <header class="header">
-                <h1>🎵 ZEHax Downloader</h1>
-                <p>100% Working YouTube MP3 & Video Downloader</p>
-            </header>
+    <div class="container">
+        <div class="header">
+            <h1>🎵 KPH - MP3 Downloader</h1>
+            <p>Download high quality MP3 from YouTube videos</p>
+        </div>
 
-            <form id="downloadForm" class="download-form">
-                <div class="form-group">
-                    <label for="url">YouTube URL</label>
-                    <input
-                        type="url"
-                        id="url"
-                        class="form-input"
-                        placeholder="https://www.youtube.com/watch?v=..."
-                        required
-                    />
-                </div>
-
-                <div class="form-group">
-                    <label for="format">Download Format</label>
-                    <select id="format" class="form-select">
-                        <option value="mp3">🎵 MP3 Audio (Best Quality)</option>
-                        <option value="m4a">🎶 M4A Audio</option>
-                        <option value="mp4">🎬 MP4 Video (720p)</option>
-                        <option value="360">📺 360p Video</option>
-                        <option value="480">📺 480p Video</option>
-                        <option value="720">🖥️ 720p HD</option>
-                        <option value="1080">🖥️ 1080p Full HD</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="download-btn" id="downloadBtn">
-                    ⬇️ Download Now
-                </button>
-            </form>
-
-            <div class="error" id="errorDiv">
-                ❌ <span id="errorMessage"></span>
+        <div class="search-section">
+            <div class="info-box">
+                <strong>Note:</strong> This is a demo version. For full functionality, you need to deploy the backend server.
             </div>
-
-            <div class="loading" id="loadingDiv">
+            
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" 
+                       placeholder="Enter YouTube URL or song name..." autocomplete="off">
+                <button class="search-btn" onclick="searchSong()">Search</button>
+            </div>
+            <div class="loading" id="loading">
                 <div class="spinner"></div>
-                <div>Processing your download...</div>
+                <p>Searching and processing your song...</p>
+            </div>
+            <div class="error" id="error"></div>
+        </div>
+
+        <div class="result-section" id="resultSection">
+            <div class="song-info">
+                <h3 id="songTitle">Song Title</h3>
+                <img id="songThumbnail" class="thumbnail" src="" alt="Thumbnail">
+                <div class="song-details">
+                    <div class="detail-item">
+                        <span>⏱️ Duration:</span>
+                        <span id="songDuration">--:--</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>👁️ Views:</span>
+                        <span id="songViews">0</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>🎤 Author:</span>
+                        <span id="songAuthor">Unknown</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>🔗 Link:</span>
+                        <a id="songLink" href="#" target="_blank">View on YouTube</a>
+                    </div>
+                </div>
             </div>
 
-            <div class="result-card" id="resultCard">
-                <div class="result-header">
-                    <h3 class="result-title">✅ Download Ready!</h3>
-                </div>
-                
-                <div class="result-info" id="resultInfo">
-                    <!-- Result info will be populated here -->
-                </div>
-
-                <div id="thumbnailContainer" style="text-align: center; margin-bottom: 20px;"></div>
-
-                <div style="text-align: center;">
-                    <a id="downloadLink" href="#" target="_blank" class="download-link" download>
-                        🚀 Download Now
-                    </a>
-                </div>
+            <div class="download-options">
+                <button class="download-btn audio" onclick="downloadAudio()">
+                    🎵 Download Audio (MP3) - Demo
+                </button>
             </div>
+        </div>
 
-            <div class="history-section" id="historySection" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <h3 style="color: white;">📝 Recent Downloads</h3>
-                    <button id="clearHistoryBtn" style="padding: 8px 16px; background: #dc3545; color: white; border: none; border-radius: 6px; cursor: pointer;">Clear</button>
-                </div>
-                <div id="historyList"></div>
-            </div>
-
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3 class="feature-title">100% Working</h3>
-                    <p class="feature-description">
-                        Guaranteed working YouTube downloader with high success rate
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🎵</div>
-                    <h3 class="feature-title">High Quality MP3</h3>
-                    <p class="feature-description">
-                        Download YouTube videos as high-quality MP3 audio files
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">📱</div>
-                    <h3 class="feature-title">Mobile Friendly</h3>
-                    <p class="feature-description">
-                        Works perfectly on all devices including Android and iOS
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
-                    <h3 class="feature-title">Safe & Secure</h3>
-                    <p class="feature-description">
-                        No ads, no malware, completely safe to use
-                    </p>
-                </div>
-            </div>
+        <div class="footer">
+            <p>Powered by KPH MP3 Downloader | © 2024 All rights reserved</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">
+                For full functionality, deploy the backend server
+            </p>
         </div>
     </div>
 
     <script>
-        const API_BASE = window.location.origin;
-        
-        const form = document.getElementById('downloadForm');
-        const urlInput = document.getElementById('url');
-        const formatSelect = document.getElementById('format');
-        const downloadBtn = document.getElementById('downloadBtn');
-        const errorDiv = document.getElementById('errorDiv');
-        const errorMessage = document.getElementById('errorMessage');
-        const loadingDiv = document.getElementById('loadingDiv');
-        const resultCard = document.getElementById('resultCard');
-        const resultInfo = document.getElementById('resultInfo');
-        const thumbnailContainer = document.getElementById('thumbnailContainer');
-        const downloadLink = document.getElementById('downloadLink');
+        // Demo data for GitHub Pages version
+        const demoData = {
+            title: "Demo Song - KPH MP3 Downloader",
+            url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+            thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+            duration: "3:45",
+            views: "1,234,567",
+            author: "Demo Artist"
+        };
 
-        function showError(message) {
-            errorMessage.textContent = message;
-            errorDiv.style.display = 'block';
-            loadingDiv.style.display = 'none';
-            resultCard.style.display = 'none';
-        }
+        async function searchSong() {
+            const searchInput = document.getElementById('searchInput').value.trim();
+            const loading = document.getElementById('loading');
+            const error = document.getElementById('error');
+            const resultSection = document.getElementById('resultSection');
 
-        function showLoading() {
-            errorDiv.style.display = 'none';
-            loadingDiv.style.display = 'flex';
-            resultCard.style.display = 'none';
-            downloadBtn.disabled = true;
-            downloadBtn.textContent = 'Processing...';
-        }
-
-        function hideLoading() {
-            loadingDiv.style.display = 'none';
-            downloadBtn.disabled = false;
-            downloadBtn.textContent = '⬇️ Download Now';
-        }
-
-        function formatDuration(seconds) {
-            const mins = Math.floor(seconds / 60);
-            const secs = seconds % 60;
-            return `${mins}:${secs.toString().padStart(2, '0')}`;
-        }
-
-        function showResult(data) {
-            hideLoading();
-            errorDiv.style.display = 'none';
-            
-            // Populate result info
-            resultInfo.innerHTML = `
-                <div class="info-item">
-                    <span>🎵 Title:</span>
-                    <span>${data.title}</span>
-                </div>
-                <div class="info-item">
-                    <span>👤 Author:</span>
-                    <span>${data.author || 'Unknown'}</span>
-                </div>
-                <div class="info-item">
-                    <span>📂 Format:</span>
-                    <span>${data.format}</span>
-                </div>
-                <div class="info-item">
-                    <span>📌 Quality:</span>
-                    <span>${data.quality}</span>
-                </div>
-                <div class="info-item">
-                    <span>🕒 Duration:</span>
-                    <span>${formatDuration(data.duration)}</span>
-                </div>
-            `;
-
-            // Show thumbnail if available
-            if (data.thumbnail) {
-                thumbnailContainer.innerHTML = `
-                    <img 
-                        src="${data.thumbnail}" 
-                        alt="Video thumbnail" 
-                        style="max-width: 300px; width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);" 
-                    />
-                `;
-            }
-
-            // Set download link
-            downloadLink.href = data.download;
-            downloadLink.setAttribute('download', data.filename);
-            
-            resultCard.style.display = 'block';
-            
-            // Auto scroll to result
-            resultCard.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Load and display history
-        async function loadHistory() {
-            try {
-                const response = await fetch(`${API_BASE}/history`);
-                const data = await response.json();
-                if (data.status === 'success' && data.data.length > 0) {
-                    displayHistory(data.data);
-                }
-            } catch (err) {
-                console.log('Failed to load history:', err);
-            }
-        }
-
-        function displayHistory(history) {
-            const historySection = document.getElementById('historySection');
-            const historyList = document.getElementById('historyList');
-            
-            if (history.length === 0) {
-                historySection.style.display = 'none';
+            if (!searchInput) {
+                showError('Please enter a YouTube URL or song name');
                 return;
             }
 
-            historyList.innerHTML = history.slice(0, 5).map(item => `
-                <div class="history-item">
-                    <div style="flex: 1;">
-                        <div style="font-weight: 600; margin-bottom: 4px;">${item.title}</div>
-                        <div style="font-size: 14px; color: #666;">
-                            ${item.format} • ${item.quality} • ${formatDuration(item.duration)}
-                        </div>
-                    </div>
-                    <a href="${item.download}" download="${item.filename}"
-                       style="padding: 6px 12px; background: #007bff; color: white; text-decoration: none; border-radius: 4px; font-size: 14px;">
-                        Download
-                    </a>
-                </div>
-            `).join('');
-            
-            historySection.style.display = 'block';
+            // Hide previous results and errors
+            resultSection.style.display = 'none';
+            error.style.display = 'none';
+            loading.style.display = 'block';
+
+            // Simulate API call delay
+            setTimeout(() => {
+                // For GitHub Pages demo, we'll use demo data
+                displayResults(demoData);
+                loading.style.display = 'none';
+                
+                // Show info message for demo
+                showError('This is a demo version. Real downloads require backend server deployment.', 'info');
+            }, 2000);
         }
 
-        // Clear history
-        document.getElementById('clearHistoryBtn').addEventListener('click', async () => {
-            try {
-                await fetch(`${API_BASE}/history`, { method: 'DELETE' });
-                document.getElementById('historySection').style.display = 'none';
-            } catch (err) {
-                console.log('Failed to clear history:', err);
+        function displayResults(data) {
+            document.getElementById('songTitle').textContent = data.title;
+            document.getElementById('songThumbnail').src = data.thumbnail;
+            document.getElementById('songDuration').textContent = data.duration;
+            document.getElementById('songViews').textContent = data.views;
+            document.getElementById('songAuthor').textContent = data.author;
+            document.getElementById('songLink').href = data.url;
+
+            document.getElementById('resultSection').style.display = 'block';
+        }
+
+        function downloadAudio() {
+            alert('This is a demo version. To enable real downloads:\n\n1. Deploy the backend server to Heroku/Railway\n2. Update the API endpoints in the JavaScript code\n3. Connect your frontend to the deployed backend');
+        }
+
+        function showError(message, type = 'error') {
+            const error = document.getElementById('error');
+            error.textContent = message;
+            error.style.display = 'block';
+            
+            if (type === 'info') {
+                error.style.background = '#e3f2fd';
+                error.style.color = '#1565c0';
+                error.style.borderLeftColor = '#2196F3';
+            } else {
+                error.style.background = '#ffebee';
+                error.style.color = '#c62828';
+                error.style.borderLeftColor = '#c62828';
+            }
+        }
+
+        // Allow Enter key to trigger search
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchSong();
             }
         });
-
-        // Load history on page load
-        loadHistory();
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const url = urlInput.value.trim();
-            const format = formatSelect.value;
-
-            if (!url) {
-                showError('Please enter a YouTube URL');
-                return;
-            }
-
-            // Basic YouTube URL validation
-            if (!url.includes('youtube.com') && !url.includes('youtu.be')) {
-                showError('Please enter a valid YouTube URL');
-                return;
-            }
-
-            showLoading();
-
-            try {
-                const response = await fetch(`${API_BASE}/download?url=${encodeURIComponent(url)}&format=${format}`);
-                const data = await response.json();
-
-                if (data.status === 'success') {
-                    showResult(data.data);
-                    // Reload history after successful download
-                    setTimeout(loadHistory, 1000);
-                } else {
-                    showError(data.message || 'Download failed. Please try again.');
-                }
-            } catch (err) {
-                showError('Network error. Please check your connection and try again.');
-            }
-        });
-
-        // Auto-focus URL input
-        urlInput.focus();
     </script>
 </body>
 </html>
