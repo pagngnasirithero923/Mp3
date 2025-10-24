@@ -1,20 +1,16 @@
 {
-  "name": "zehax-downloader",
+  "name": "kph-mp3-downloader",
   "version": "1.0.0",
-  "description": "100% Working YouTube MP3 Downloader",
-  "main": "server.js",
+  "description": "YouTube to MP3 Downloader",
+  "main": "index.html",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "vercel dev"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "cors": "^2.8.5",
     "ytdl-core": "^4.11.5",
-    "fluent-ffmpeg": "^2.1.2",
-    "ffmpeg-static": "^5.2.0"
+    "yt-search": "^2.10.3"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "vercel": "^28.16.0"
   }
 }
