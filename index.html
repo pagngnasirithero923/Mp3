@@ -1,363 +1,145 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="si">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KPH - MP3 Downloader</title>
+    <title>YouTube to MP3 Downloader</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
         }
-
+        
         .container {
             max-width: 800px;
             margin: 0 auto;
             background: white;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-            color: white;
-            padding: 30px 20px;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-
-        .search-section {
             padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-
-        .search-box {
-            display: flex;
-            gap: 10px;
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .input-group {
             margin-bottom: 20px;
         }
-
-        .search-input {
-            flex: 1;
+        
+        input[type="text"] {
+            width: 100%;
             padding: 15px;
             border: 2px solid #ddd;
             border-radius: 8px;
             font-size: 16px;
-            transition: border-color 0.3s;
+            margin-bottom: 15px;
         }
-
-        .search-input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .search-btn {
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
             padding: 15px 30px;
-            background: #667eea;
-            color: white;
-            border: none;
             border-radius: 8px;
-            cursor: pointer;
             font-size: 16px;
-            transition: background 0.3s;
-        }
-
-        .search-btn:hover {
-            background: #764ba2;
-        }
-
-        .result-section {
-            padding: 0 30px 30px;
-            display: none;
-        }
-
-        .song-info {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-
-        .song-info h3 {
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .song-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .detail-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #666;
-        }
-
-        .download-options {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
-        }
-
-        .download-btn {
-            padding: 15px;
-            background: #667eea;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            text-align: center;
-            transition: all 0.3s;
-            border: none;
             cursor: pointer;
-            font-size: 14px;
+            width: 100%;
+            transition: transform 0.2s;
         }
-
-        .download-btn:hover {
-            background: #764ba2;
+        
+        button:hover {
             transform: translateY(-2px);
         }
-
-        .download-btn.audio {
-            background: #4CAF50;
-        }
-
-        .download-btn.audio:hover {
-            background: #45a049;
-        }
-
-        .thumbnail {
-            width: 100%;
-            max-width: 300px;
-            border-radius: 8px;
-            margin: 15px 0;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 20px;
-            display: none;
-        }
-
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .error {
-            background: #ffebee;
-            color: #c62828;
+        
+        .result {
+            margin-top: 20px;
             padding: 15px;
             border-radius: 8px;
-            margin: 20px 0;
-            border-left: 4px solid #c62828;
-            display: none;
-        }
-
-        .success {
-            background: #e8f5e8;
-            color: #2e7d32;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
-            border-left: 4px solid #4caf50;
-            display: none;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 20px;
             background: #f8f9fa;
-            color: #666;
-            margin-top: 30px;
+            display: none;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>🎵 KPH - MP3 Downloader</h1>
-            <p>Download high quality MP3 from YouTube videos</p>
+        <h1>🎵 YouTube to MP3 Downloader</h1>
+        
+        <div class="input-group">
+            <input type="text" id="youtubeUrl" placeholder="YouTube ලින්ක් එක ඇතුලත් කරන්න...">
+            <button onclick="downloadMP3()">MP3 බාගත කරන්න</button>
         </div>
-
-        <div class="search-section">
-            <div class="search-box">
-                <input type="text" class="search-input" id="searchInput" 
-                       placeholder="Enter YouTube URL or song name..." autocomplete="off">
-                <button class="search-btn" onclick="searchSong()">Search</button>
-            </div>
-            <div class="loading" id="loading">
-                <div class="spinner"></div>
-                <p>Searching and processing your song...</p>
-            </div>
-            <div class="error" id="error"></div>
-            <div class="success" id="success"></div>
-        </div>
-
-        <div class="result-section" id="resultSection">
-            <div class="song-info">
-                <h3 id="songTitle">Song Title</h3>
-                <img id="songThumbnail" class="thumbnail" src="" alt="Thumbnail">
-                <div class="song-details">
-                    <div class="detail-item">
-                        <span>⏱️ Duration:</span>
-                        <span id="songDuration">--:--</span>
-                    </div>
-                    <div class="detail-item">
-                        <span>👁️ Views:</span>
-                        <span id="songViews">0</span>
-                    </div>
-                    <div class="detail-item">
-                        <span>🎤 Author:</span>
-                        <span id="songAuthor">Unknown</span>
-                    </div>
-                    <div class="detail-item">
-                        <span>🔗 Link:</span>
-                        <a id="songLink" href="#" target="_blank">View on YouTube</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="download-options">
-                <button class="download-btn audio" onclick="downloadAudio()">
-                    🎵 Download Audio (MP3)
-                </button>
-            </div>
-        </div>
-
-        <div class="footer">
-            <p>Powered by KPH MP3 Downloader | © 2024 All rights reserved</p>
-        </div>
+        
+        <div id="result" class="result"></div>
     </div>
 
     <script>
-        let currentSongData = null;
-
-        async function searchSong() {
-            const searchInput = document.getElementById('searchInput').value.trim();
-            const loading = document.getElementById('loading');
-            const error = document.getElementById('error');
-            const success = document.getElementById('success');
-            const resultSection = document.getElementById('resultSection');
-
-            if (!searchInput) {
-                showError('Please enter a YouTube URL or song name');
+        function downloadMP3() {
+            const youtubeUrl = document.getElementById('youtubeUrl').value;
+            const resultDiv = document.getElementById('result');
+            
+            if (!youtubeUrl) {
+                resultDiv.innerHTML = '<p style="color: red;">කරුණාකර YouTube ලින්ක් එක ඇතුලත් කරන්න!</p>';
+                resultDiv.style.display = 'block';
                 return;
             }
-
-            // Hide previous results and messages
-            resultSection.style.display = 'none';
-            error.style.display = 'none';
-            success.style.display = 'none';
-            loading.style.display = 'block';
-
-            try {
-                // Use Vercel serverless function
-                const response = await fetch('/api/search', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ query: searchInput })
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(data.error || 'Failed to fetch song data');
-                }
-
-                currentSongData = data;
-                displayResults(data);
-                showSuccess('Song found! Click download to get MP3');
-
-            } catch (err) {
-                showError(err.message);
-            } finally {
-                loading.style.display = 'none';
-            }
-        }
-
-        function displayResults(data) {
-            document.getElementById('songTitle').textContent = data.title;
-            document.getElementById('songThumbnail').src = data.thumbnail;
-            document.getElementById('songDuration').textContent = data.duration;
-            document.getElementById('songViews').textContent = data.views;
-            document.getElementById('songAuthor').textContent = data.author;
-            document.getElementById('songLink').href = data.url;
-
-            document.getElementById('resultSection').style.display = 'block';
-        }
-
-        async function downloadAudio() {
-            if (!currentSongData) return;
             
-            try {
-                showSuccess('Download starting...');
+            // YouTube URL එක සත්‍යාපනය කිරීම
+            if (!youtubeUrl.includes('youtube.com') && !youtubeUrl.includes('youtu.be')) {
+                resultDiv.innerHTML = '<p style="color: red;">කරුණාකර වලංගු YouTube ලින්ක් එකක් ඇතුලත් කරන්න!</p>';
+                resultDiv.style.display = 'block';
+                return;
+            }
+            
+            // ඔබේ API භාවිතා කරමින් ඩවුන්ලෝඩ් ලින්ක් එක සාදාගැනීම
+            const videoId = extractVideoId(youtubeUrl);
+            if (videoId) {
+                const downloadLink = `https://apis.davidcyriltech.my.id/download/ytmp3?url=https://youtu.be/${videoId}`;
                 
-                // Create download link
-                const downloadUrl = `/api/download?url=${encodeURIComponent(currentSongData.url)}&title=${encodeURIComponent(currentSongData.title)}`;
-                
-                // Trigger download
-                const link = document.createElement('a');
-                link.href = downloadUrl;
-                link.download = `${currentSongData.title}.mp3`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                
-            } catch (err) {
-                showError('Download failed: ' + err.message);
+                resultDiv.innerHTML = `
+                    <p>✅ ඔබගේ MP3 ගීතය සූදානම්!</p>
+                    <a href="${downloadLink}" class="download-btn" target="_blank">
+                        MP3 බාගත කරන්න
+                    </a>
+                `;
+                resultDiv.style.display = 'block';
+            } else {
+                resultDiv.innerHTML = '<p style="color: red;">ලින්ක් එකෙන් වීඩියෝ ID එක හමුවුනේ නැත!</p>';
+                resultDiv.style.display = 'block';
             }
         }
-
-        function showError(message) {
-            const error = document.getElementById('error');
-            error.textContent = message;
-            error.style.display = 'block';
+        
+        function extractVideoId(url) {
+            const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[7].length === 11) ? match[7] : false;
         }
-
-        function showSuccess(message) {
-            const success = document.getElementById('success');
-            success.textContent = message;
-            success.style.display = 'block';
-        }
-
-        // Allow Enter key to trigger search
-        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+        
+        // Enter බටන් එක එබුවාම ඩවුන්ලෝඩ් කිරීම
+        document.getElementById('youtubeUrl').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                searchSong();
+                downloadMP3();
             }
         });
     </script>
